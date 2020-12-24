@@ -6,7 +6,7 @@ Once you have your [login credentials](/docs/guide/) you need to choose how you 
 
 - [CLI](/docs/cli)
 - [Javascript SDK](/docs/sdks/javascript)
-- [Go SDK](/docs/sdks/go)
+- [Go SDK](/docs/sdks/golang)
 
 Not sure which to pick? Follow our handy guide below.
 

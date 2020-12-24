@@ -20,12 +20,25 @@ api-key-value="-"
 primary-color="#f04e23"
 nav-accent-color="#395d93"> </rapi-doc> -->
 
-import SwaggerUI, { presets } from "swagger-ui";
+import { useState, useEffect } from "react";
 import "swagger-ui/dist/swagger-ui.css";
 
 export const Reference = () => {
   // TODO: Handle login and passing along token.
-  const tmp = SwaggerUI({
+  const [mod, setMod] = useState(null);
+  useEffect(() => {
+    // This silly hack is required because server-side-rendering breaks when
+    // you try to access `window` so we need to load at runtime in the browser
+    // instead. If abstracted to a new hook, the importer doesn't pick up the
+    // module and it won't get bundled, so here we are...
+    import("swagger-ui").then((loaded) => {
+      setMod(loaded);
+    });
+  }, []);
+  if (!mod) {
+    return <div />;
+  }
+  const tmp = mod.default({
     url: "https://api.istreamplanet.com/openapi.json",
   });
   tmp.initOAuth({

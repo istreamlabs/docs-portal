@@ -2,12 +2,11 @@
 title: Creating a Channel
 ---
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-import { Replay } from "vimond-replay";
 import "vimond-replay/index.css";
 
 Let's create your first channel! Make sure you have a [client](/docs/guide/client) set up so you can follow along with the examples below.
@@ -126,6 +125,20 @@ You can use a tool like [VLC](https://www.videolan.org/vlc/index.html) to view y
 export const Player = () => {
   const [source, setSource] = useState("");
   const [loadedSource, setLoadedSource] = useState("");
+  const [mod, setMod] = useState(null);
+  useEffect(() => {
+    // This silly hack is required because server-side-rendering breaks when
+    // you try to access `window` so we need to load at runtime in the browser
+    // instead. If abstracted to a new hook, the importer doesn't pick up the
+    // module and it won't get bundled, so here we are...
+    import("vimond-replay").then((loaded) => {
+      setMod(loaded);
+    });
+  }, []);
+  if (!mod) {
+    return <div />;
+  }
+  const Replay = mod && mod.Replay;
   return (
     <div>
       <div style={{ width: "100%" }}>
