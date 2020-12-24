@@ -1,0 +1,42 @@
+---
+title: Streaming API
+---
+
+<!-- Disabling RapiDoc for now since it jumps strangely, probably due to conflicting scroll spy features or something... -->
+<!-- import "rapidoc";
+
+<rapi-doc
+spec-url="https://api.istreamplanet.com/openapi.json"
+server-url="https://api.istreamplanet.com/"
+render-style="view"
+layout="column"
+show-header="false"
+show-info="false"
+allow-server-selection={false}
+allow-authentication={false}
+api-key-name="Authorization"
+api-key-location="header"
+api-key-value="-"
+primary-color="#f04e23"
+nav-accent-color="#395d93"> </rapi-doc> -->
+
+import SwaggerUI, { presets } from "swagger-ui";
+import "swagger-ui/dist/swagger-ui.css";
+
+export const Reference = () => {
+  // TODO: Handle login and passing along token.
+  const tmp = SwaggerUI({
+    url: "https://api.istreamplanet.com/openapi.json",
+  });
+  tmp.initOAuth({
+    clientId: "9joico3xz7UKKSn3HiCcI2RJWkqs1INQ",
+    additionalQueryStringParams: { audience: "" },
+    usePkceWithAuthorizationCodeGrant: true,
+  });
+  const Component = tmp.getComponent("App", "root");
+  return <Component />;
+};
+
+TODO: Button do to <button>Login</button> so trying calls works.
+
+<Reference />

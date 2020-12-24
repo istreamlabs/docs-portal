@@ -1,0 +1,56 @@
+---
+title: Channel Operations
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+Live channel operations let you perform actions on a channel while it is running. This can be useful for live events where you might insert slate images or videos, insert program start/end signals or insert custom SCTE-35 data to be consumed by your clients.
+
+## Inserting Slates
+
+Slates are images or short videos that get overlayed to hide the input source video on the live stream. You pass the URI when slating in or out.
+
+<Tabs
+  groupId="client"
+  defaultValue="cli"
+  values={[
+    { label: "CLI", value: "cli" },
+    { label: "Javascript", value: "js" },
+    { label: "Go", value: "go" },
+  ]}
+>
+  <TabItem value="cli">
+
+```bash
+# Show the slate
+$ restish isp slate-in $CHANNELID uri: https://example.com/slate.jpg
+
+# Return to the input source video
+$ restish isp slate-out $CHANNELID
+```
+
+  </TabItem>
+  <TabItem value="js">
+
+```js
+// TODO
+```
+
+  </TabItem>
+  <TabItem value="go">
+
+```go
+// TODO
+```
+
+  </TabItem>
+</Tabs>
+
+## Starting & Stopping Programs
+
+**TODO** This section is unfinished.
+
+## Arbitraty SCTE-35
+
+**TODO** This section is unfinished.

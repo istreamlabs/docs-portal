@@ -1,0 +1,212 @@
+---
+title: Creating a Channel
+---
+
+import { useState } from "react";
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+import { Replay } from "vimond-replay";
+import "vimond-replay/index.css";
+
+Let's create your first channel! Make sure you have a [client](/docs/guide/client) set up so you can follow along with the examples below.
+
+:::info
+Channel creation is entirely self-service. iStreamPlanet will not stop of cleanup your channels. Every channel you create will incur billing charges, including the demo channel below. View your dashboard to see an overview of charges on your account.
+:::
+
+## Choosing a Source
+
+Before creating a new channel, you _must_ have a source to create it from. The source represents the incoming live video feed. First, get a list of sources that you have access to so that you can pick one:
+
+<Tabs
+  groupId="client"
+  defaultValue="cli"
+  values={[
+    { label: "CLI", value: "cli" },
+    { label: "Javascript", value: "js" },
+    { label: "Go", value: "go" },
+  ]}
+>
+  <TabItem value="cli">
+
+```bash
+$ restish isp list-sources
+
+HTTP/2.0 200 OK
+Content-Encoding: br
+Content-Type: application/cbor
+
+[
+  {
+    id: "stn-abc123"
+    name: "iStreamPlanet Demo 1"
+    self: "https://api.istreamplanet.com/v2/sources/stn-abc123"
+  }
+  {
+    id: "stn-def456"
+    name: "iStreamPlanet Demo 2"
+    self: "https://api.istreamplanet.com/v2/sources/stn-def456"
+  }
+]
+```
+
+  </TabItem>
+  <TabItem value="js">
+
+```js
+// TODO
+```
+
+  </TabItem>
+  <TabItem value="go">
+
+```go
+// TODO
+```
+
+  </TabItem>
+</Tabs>
+
+Each returned source has an `id` field. Pick one and we will use it to create a new channel.
+
+## Creating a Channel
+
+Create a new channel with default settings by passing in your source at creation time. Here we assume that `SOURCEID` is the value picked above.
+
+<Tabs
+  groupId="client"
+  defaultValue="cli"
+  values={[
+    { label: "CLI", value: "cli" },
+    { label: "Javascript", value: "js" },
+    { label: "Go", value: "go" },
+  ]}
+>
+  <TabItem value="cli">
+
+```bash
+$ restish isp create-channel source.id: $SOURCEID
+
+HTTP/2.0 201 Created
+Date: Wed, 23 Dec 2020 22:07:29 GMT
+Location: /v2/channels/ch-abc123
+```
+
+Your channel will get created and immediately start encoding and publishing. You can use the `Location` header from the response to find out the encoding settings and playback URLs:
+
+```bash
+$ restish api.istreamplanet.com/v2/channels/ch-abc123
+```
+
+  </TabItem>
+  <TabItem value="js">
+
+```js
+// TODO
+```
+
+  </TabItem>
+  <TabItem value="go">
+
+```go
+// TODO
+```
+
+  </TabItem>
+</Tabs>
+
+Keep your playback URL handy for viewing the running channel.
+
+## Viewing the Channel
+
+You can use a tool like [VLC](https://www.videolan.org/vlc/index.html) to view your video, or paste it into the embedded video player below:
+
+export const Player = () => {
+  const [source, setSource] = useState("");
+  const [loadedSource, setLoadedSource] = useState("");
+  return (
+    <div>
+      <div style={{ width: "100%" }}>
+        <input
+          className="input"
+          placeholder="Enter playback URL"
+          value={source}
+          onChange={(event) => {
+            setSource(event.target.value);
+          }}
+          onKeyDown={(event) => {
+            if (event.key == "Enter") {
+              setLoadedSource(source);
+            }
+          }}
+          style={{
+            width: "90%",
+            padding: "8px",
+            border: "none",
+            background: "#eee",
+          }}
+        />
+        <button
+          className="button button--primary"
+          onClick={() => {
+            setLoadedSource(source);
+          }}
+          style={{ width: "10%" }}
+        >
+          Load
+        </button>
+      </div>
+      <Replay source={loadedSource} />
+    </div>
+  );
+};
+
+<Player />
+
+## Customizing Channel Settings
+
+**TODO** This section isn't finished yet!
+
+## Deleting a Channel
+
+When finished, you can stop a channel from publishing by deleting it using either the channel's unique ID or the channel's location URI returned from creating the channel.
+
+<Tabs
+  groupId="client"
+  defaultValue="cli"
+  values={[
+    { label: "CLI", value: "cli" },
+    { label: "Javascript", value: "js" },
+    { label: "Go", value: "go" },
+  ]}
+>
+  <TabItem value="cli">
+
+```bash
+# If you know the ID:
+$ restish isp delete-channel $CHANNELID
+
+# If you know the location:
+$ restish delete api.istreamplanet.com/v2/channels/...
+```
+
+  </TabItem>
+  <TabItem value="js">
+
+```js
+// TODO
+```
+
+  </TabItem>
+  <TabItem value="go">
+
+```go
+// TODO
+```
+
+  </TabItem>
+</Tabs>
+
+This covers the most basic channel workflow. Read on to find out how to perform live channel operations in the next section.

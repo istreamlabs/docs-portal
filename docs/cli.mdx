@@ -1,0 +1,119 @@
+---
+id: cli
+title: Download the iStreamPlanet CLI
+sidebar_label: Download CLI
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+iStreamPlanet's APIs implement OpenAPI 3 descriptions which are publicly linked via [RFC 8631](https://tools.ietf.org/html/rfc8631) `service-desc` link relation headers and auto-discovery for CLI configuration via `x-cli-config` extensions. This means you can use any client which understands these features to interact with our APIs.
+
+Since the client is generated from API-provided descriptions rather than hard-coded, you will always have access to the latest API features.
+
+## Installation
+
+We recommend getting started with [Restish](https://rest.sh/), a simple cURL-like commandline client for REST-ish APIs. Getting started is easy:
+
+<Tabs
+  defaultValue="mac"
+  values={[
+    { label: "macOS", value: "mac" },
+    { label: "Windows", value: "win" },
+    { label: "Linux", value: "linux" },
+  ]}
+>
+  <TabItem value="mac">
+
+First, make sure you have [Homebrew](https://brew.sh/) installed. After that, installing Restish is a breeze:
+
+```bash
+$ brew tap danielgtaylor/restish && brew install restish
+```
+
+Prefer not to use Homebrew? Then [manually download a release](https://github.com/danielgtaylor/restish/releases).
+
+  </TabItem>
+  <TabItem value="win">
+
+Head over and [manually download a release](https://github.com/danielgtaylor/restish/releases). Unzip the executable somewhere and you are good to go!
+
+  </TabItem>
+  <TabItem value="linux">
+
+First, make sure you have [Homebrew](https://brew.sh/) installed. After that, installing Restish is a breeze:
+
+```bash
+$ brew tap danielgtaylor/restish && brew install restish
+```
+
+Prefer not to use Homebrew? Then [manually download a release](https://github.com/danielgtaylor/restish/releases) or use `go get` if you have the Go compiler installed:
+
+```bash
+// Download, build & install.
+$ go get -u github.com/danielgtaylor/restish
+```
+
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+Once installed you need to configure Restish to talk to the iStreamPlanet API. We will use `isp` as the shorthand name for the iStreamPlanet Streaming APIs. You will be prompted for your organization ID when setting up auth. Once done, select `Save and quit`.
+
+```bash
+# Configure Restish to talk to iStreamPlanet.
+$ restish api config isp https://api.istreamplanet.com
+
+? Organization [? for help] YOUR_VALUE_HERE
+? Select option  [Use arrows to move, type to filter]
+  Change base URI (https://api.istreamplanet.com)
+  Add profile
+  Edit profile default
+> Save and exit
+```
+
+## Example Usage
+
+Commands and help are generated on the fly from the server-provided OpenAPI document. Help commands let you see what is available and how to use it.
+
+```bash
+# Get a list of all available commands.
+$ restish isp --help
+
+# See help for creating a channel.
+$ restish isp create-channel --help
+```
+
+### Getting Information
+
+Read calls are fairly straightforward and take optional filtering parameters.
+
+```bash
+# Get a list of sources you have access to.
+$ restish isp list-sources
+
+# Get a list of your channels.
+$ restish isp list-channels
+```
+
+Restish is smart about which URIs require authentication by matching them to pre-configured API base URIs, so you can also directly access links you find in responses. For example, you might see something like this returned when listing channels and want to get additional details:
+
+```bash
+# Get details from a channel by link.
+$ restish https://api.istreamplanet.com/v2/channels/ch-abc123
+```
+
+### Writing Data
+
+Write calls take input in one of two ways: JSON passed in via stdin or a custom [CLI shorthand syntax](https://rest.sh/#/shorthand) on the commandline.
+
+```bash
+# Pass JSON via stdin.
+$ restish isp create-channel <input.json
+
+# Pass data on the commandline via shorthand.
+$ restish isp create-channel name: My Test Channel, source: s-abc123, ...
+```
+
+Read the [Restish documentation](https://rest.sh/) for more in-depth CLI info and check out our [Guide](/docs/guide/) and API reference for examples that show you how to use the iStreamPlanet APIs.

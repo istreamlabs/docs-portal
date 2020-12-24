@@ -1,0 +1,68 @@
+/* stylelint-disable docusaurus/copyright-header */
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+/* You can override the default Infima variables here. */
+:root {
+  --ifm-color-primary: #f04e23;
+  --ifm-color-primary-dark: #e83d10;
+  --ifm-color-primary-darker: #db3a0f;
+  --ifm-color-primary-darkest: #b4300c;
+  --ifm-color-primary-light: #f2633d;
+  --ifm-color-primary-lighter: #f36d4a;
+  --ifm-color-primary-lightest: #f58c70;
+
+  --ifm-color-success: #37a985;
+  --ifm-color-info: #395d93;
+  --ifm-color-warning: #f9c846;
+  --ifm-color-danger: #6d1a36;
+  /* --ifm-code-font-size: 95%; */
+}
+
+iframe {
+  border: none;
+}
+
+.navbar--dark {
+  --ifm-navbar-background-color: #000;
+}
+
+.navbar__brand:hover {
+  color: white;
+}
+
+.hero--primary {
+  --ifm-hero-background-color: #626c66;
+}
+
+.hero .button--secondary {
+  color: white;
+  background: #f04e23;
+  border: none;
+}
+
+.footer--dark {
+  --ifm-footer-background-color: #000;
+}
+
+.docusaurus-highlight-code-line {
+  background-color: rgb(72, 77, 91);
+  display: block;
+  margin: 0 calc(-1 * var(--ifm-pre-padding));
+  padding: 0 var(--ifm-pre-padding);
+}
+
+.swagger-ui .info {
+  display: none;
+}
+
+.swagger-ui code {
+  color: white;
+}
+
+.swagger-ui > div > .wrapper {
+  padding: 0;
+}
