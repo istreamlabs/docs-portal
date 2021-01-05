@@ -29,7 +29,7 @@ const features = [
         <br/><br/>
         <Link className="button button--primary" to="/docs/cli">Download CLI</Link>
         &nbsp;
-        <Link className="button button--primary" to="/docs/sdks/javascript">Download SDKs</Link>
+        <Link className="button button--primary" to="/docs/guide/client">Download SDKs</Link>
       </>
     ),
   },

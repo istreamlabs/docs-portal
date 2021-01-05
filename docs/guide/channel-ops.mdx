@@ -41,7 +41,26 @@ $ restish isp slate-out $CHANNELID
   <TabItem value="go">
 
 ```go
-// TODO
+request := client.ChannelOperationsApi.SlateIn(context.Background(), "CHANNEL_ID")
+request.Slate(isp.Slate{
+  Uri: "https://example.com/slate.jpg",
+})
+_, err := request.Execute()
+
+if err.Error() != "" {
+  panic(err)
+}
+```
+
+And then remove the slate:
+
+```go
+request := client.ChannelOperationsApi.SlateOut(context.Background(), "CHANNEL_ID")
+_, err := request.Execute()
+
+if err.Error() != "" {
+  panic(err)
+}
 ```
 
   </TabItem>

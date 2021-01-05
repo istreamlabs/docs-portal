@@ -38,10 +38,42 @@ iframe {
   --ifm-hero-background-color: #626c66;
 }
 
+html[data-theme="dark"] .hero,
+html[data-theme="dark"] .alert--info {
+  color: white;
+}
+
+html[data-theme="dark"] .alert--info svg {
+  fill: white;
+  stroke: white;
+}
+
 .hero .button--secondary {
   color: white;
   background: #f04e23;
   border: none;
+}
+
+.shields {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 1em;
+}
+
+.shield {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  color: white;
+  background: var(--ifm-color-info);
+  padding: 6px 10px;
+  border-radius: 6px;
+  gap: 6px;
+}
+
+.shield:hover {
+  color: white;
+  text-decoration: none;
 }
 
 .footer--dark {

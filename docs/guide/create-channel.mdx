@@ -12,7 +12,7 @@ import "vimond-replay/index.css";
 Let's create your first channel! Make sure you have a [client](/docs/guide/client) set up so you can follow along with the examples below.
 
 :::info
-Channel creation is entirely self-service. iStreamPlanet will not stop of cleanup your channels. Every channel you create will incur billing charges, including the demo channel below. View your dashboard to see an overview of charges on your account.
+Channel creation is entirely self-service. iStreamPlanet will not stop or cleanup your channels. Every channel you create may incur billing charges, including the demo channel below. View your dashboard to see an overview of charges on your account.
 :::
 
 ## Choosing a Source
@@ -62,7 +62,33 @@ Content-Type: application/cbor
   <TabItem value="go">
 
 ```go
-// TODO
+package main
+
+import (
+	"context"
+	"fmt"
+
+	"github.com/istreamlabs/go-sdk/isp"
+)
+
+func main() {
+	// Create a new API client.
+	client := isp.NewWithClientCredentials(CLIENT_ID, CLIENT_SECRET, ORGANIZATION)
+
+	// Get a list of all source summaries. Pagination is handled via the
+	// `ListSourcesAll()` utility. For calls without pagination you can simply
+	// call the `Execute()` method on the request.
+	request := client.SourcesApi.ListSources(context.Background())
+	summaries, _, err := client.ListSourcesAll(request)
+	if err.Error() != "" {
+		panic(err)
+	}
+
+	// For each source, print out its ID and self link.
+	for _, s := range summaries {
+		fmt.Println(s.Id + " " + *s.Self)
+	}
+}
 ```
 
   </TabItem>
@@ -110,7 +136,27 @@ $ restish api.istreamplanet.com/v2/channels/ch-abc123
   <TabItem value="go">
 
 ```go
-// TODO
+// Create the request, setting up a basic channel with just a source ID.
+request := client.ChannelsApi.CreateChannel(context.Background())
+request.Channel(isp.Channel{
+  Source: isp.ChannelSource{
+    Id: "SOURCE_ID",
+  },
+})
+
+// Perform the request and check for errors.
+resp, err := request.Channel().Execute()
+
+if err.Error() != "" {
+  panic(err)
+}
+```
+
+Your channel will get created and immediately start encoding and publishing. You can use the `Location` header from the response to find out the encoding settings and playback URLs:
+
+```go
+// Print out the URI for the new channel's details.
+fmt.Println(resp.Header.Get("Location"))
 ```
 
   </TabItem>
@@ -216,7 +262,13 @@ $ restish delete api.istreamplanet.com/v2/channels/...
   <TabItem value="go">
 
 ```go
-// TODO
+// Delete the channel. Set your own CHANNEL_ID!
+request := client.ChannelsApi.DeleteChannel(context.Background(), "CHANNEL_ID")
+_, err = request.Execute()
+
+if err.Error() != "" {
+  panic(err)
+}
 ```
 
   </TabItem>

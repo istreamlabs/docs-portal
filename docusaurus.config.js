@@ -8,6 +8,9 @@ module.exports = {
   favicon: 'img/favicon.ico',
   organizationName: 'istreamlabs', // Usually your GitHub org/user name.
   projectName: 'istreamlabs.github.io', // Usually your repo name.
+  stylesheets: [
+    "https://fonts.googleapis.com/icon?family=Material+Icons",
+  ],
   themeConfig: {
     sidebarCollapsible: false,
     navbar: {
@@ -26,7 +29,7 @@ module.exports = {
         },
         {to: '/docs/reference/streaming', label: 'API Docs'},
         {to: '/docs/cli', label: 'Download CLI'},
-        {to: '/docs/sdks/javascript', label: 'Download SDKs', activeBasePath: 'docs/sdks'},
+        {to: '/docs/guide/client', label: 'Download SDKs', activeBasePath: 'docs/sdks'},
       ],
     },
     footer: {
@@ -75,7 +78,7 @@ module.exports = {
       copyright: `Copyright © ${new Date().getFullYear()} iStreamPlanet - Built with Docusaurus.`,
     },
     prism: {
-      additionalLanguages: ['bash'],
+      additionalLanguages: ['bash', 'http'],
     },
   },
   presets: [

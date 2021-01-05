@@ -7,6 +7,7 @@ Once you have your [login credentials](/docs/guide/) you need to choose how you 
 - [CLI](/docs/cli)
 - [Javascript SDK](/docs/sdks/javascript)
 - [Go SDK](/docs/sdks/golang)
+- [Python SDK](/docs/sdks/python)
 
 Not sure which to pick? Follow our handy guide below.
 
@@ -24,5 +25,9 @@ Choose the **iStreamPlanet Javascript SDK** if:
 Choose the **iStreamPlanet Go SDK** if:
 
 - Your primary language is Go
+
+Choose the **iStreamPlanet Python SDK** if:
+
+- Your primary language is Python
 
 Don't see your company's primary language listed here? [Contact us](https://istreamplanet.com/contact/) to request that we add it.

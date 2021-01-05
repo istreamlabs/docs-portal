@@ -7,7 +7,7 @@ sidebar_label: Download CLI
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-iStreamPlanet's APIs implement OpenAPI 3 descriptions which are publicly linked via [RFC 8631](https://tools.ietf.org/html/rfc8631) `service-desc` link relation headers and auto-discovery for CLI configuration via `x-cli-config` extensions. This means you can use any client which understands these features to interact with our APIs.
+iStreamPlanet's APIs implement OpenAPI 3 descriptions which are publicly linked via [RFC 8631](https://tools.ietf.org/html/rfc8631) `service-desc` link relation headers and auto-discovery for [CLI configuration](https://rest.sh/#/openapi?id=autoconfiguration) via `x-cli-config` extension. This means you can use any client which understands these features to interact with our APIs.
 
 Since the client is generated from API-provided descriptions rather than hard-coded, you will always have access to the latest API features.
 
@@ -65,7 +65,7 @@ Once installed you need to configure Restish to talk to the iStreamPlanet API. W
 # Configure Restish to talk to iStreamPlanet.
 $ restish api config isp https://api.istreamplanet.com
 
-? Organization [? for help] YOUR_VALUE_HERE
+? Organization ID [? for help] YOUR_VALUE_HERE
 ? Select option  [Use arrows to move, type to filter]
   Change base URI (https://api.istreamplanet.com)
   Add profile

@@ -6,7 +6,13 @@ module.exports = {
         'guide/client',
         'guide/create-channel',
         'guide/channel-ops',
-        'guide/concepts',
+        {
+          "Advanced": [
+            "guide/concepts/auth",
+            "guide/concepts/contenttypes",
+            "guide/concepts/linking"
+          ]
+        }
       ],
     },
     {
@@ -14,7 +20,7 @@ module.exports = {
     },
     "cli",
     {
-      'Download SDKs': ['sdks/javascript', 'sdks/golang'],
+      'Download SDKs': ['sdks/javascript', 'sdks/golang', 'sdks/python'],
     },
   ],
 };
