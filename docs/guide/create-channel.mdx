@@ -75,11 +75,9 @@ func main() {
 	// Create a new API client.
 	client := isp.NewWithClientCredentials(CLIENT_ID, CLIENT_SECRET, ORGANIZATION)
 
-	// Get a list of all source summaries. Pagination is handled via the
-	// `ListSourcesAll()` utility. For calls without pagination you can simply
-	// call the `Execute()` method on the request.
-	request := client.SourcesApi.ListSources(context.Background())
-	summaries, _, err := client.ListSourcesAll(request)
+	// Get a list of all source summaries. Pagination is handled automatically.
+	ctx := context.Background()
+	summaries, _, err := client.SourcesApi.ListSources(ctx).Execute()
 	if err.Error() != "" {
 		panic(err)
 	}
