@@ -2,25 +2,26 @@ module.exports = {
   someSidebar: [
     {
       Guide: [
-        'guide/index',
-        'guide/client',
-        'guide/create-channel',
-        'guide/channel-ops',
+        "guide/index",
+        "guide/client",
+        "guide/create-channel",
+        "guide/channel-ops",
+        "guide/auditing",
         {
-          "Advanced": [
+          Advanced: [
             "guide/concepts/auth",
             "guide/concepts/contenttypes",
-            "guide/concepts/linking"
-          ]
-        }
+            "guide/concepts/linking",
+          ],
+        },
       ],
     },
     {
-      'API Reference': ['reference/streaming'],
+      "API Reference": ["reference/streaming"],
     },
     "cli",
     {
-      'Download SDKs': ['sdks/javascript', 'sdks/golang', 'sdks/python'],
+      "Download SDKs": ["sdks/javascript", "sdks/golang", "sdks/python"],
     },
   ],
 };

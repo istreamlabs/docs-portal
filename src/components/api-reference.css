@@ -1,0 +1,7 @@
+.swagger-ui .auth-container code {
+  color: var(--ifm-font-color-base);
+}
+
+.swagger-ui .auth-container input {
+  color: black;
+}

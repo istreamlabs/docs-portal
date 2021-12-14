@@ -20,7 +20,7 @@ Most embedded resources will have a `self` link in their data model. This link c
 
 ```json
 {
-  "self": "https://api.istreamplanet.com/v2/channels/ch-demo",
+  "self": "https://api.istreamplanet.com/v2/channels/my-channel",
   "source": {
     "self": "https://api.istreamplanet.com/v2/sources/s-demo"
   }

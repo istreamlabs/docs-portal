@@ -5,7 +5,7 @@ title: Channel Operations
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-Live channel operations let you perform actions on a channel while it is running. This can be useful for live events where you might insert slate images or videos, insert program start/end signals or insert custom SCTE-35 data to be consumed by your clients.
+Live channel operations let you perform actions on a channel while it is running. This can be useful for live events where you might insert slate images or videos, insert program start/end signals or insert custom <abbr title="Society of Cable Telecommunications Engineers">SCTE</abbr>-35 data to be consumed by your clients.
 
 ## Inserting Slates
 
@@ -24,10 +24,10 @@ Slates are images or short videos that get overlayed to hide the input source vi
 
 ```bash
 # Show the slate
-$ restish isp slate-in $CHANNELID uri: https://example.com/slate.jpg
+$ restish isp slate-in $CHANNEL_ID uri: https://example.com/slate.jpg
 
 # Return to the input source video
-$ restish isp slate-out $CHANNELID
+$ restish isp slate-out $CHANNEL_ID
 ```
 
   </TabItem>
@@ -68,8 +68,111 @@ if err.Error() != "" {
 
 ## Starting & Stopping Programs
 
-**TODO** This section is unfinished.
+Program start and stop signals provide a way to tell video players when a logically distinct piece of content has started and stopped, such as a live sporting event. Each program has a unique event ID so that multiple overlapping programs are supported.
 
-## Arbitraty SCTE-35
+<Tabs
+  groupId="client"
+  defaultValue="cli"
+  values={[
+    { label: "CLI", value: "cli" },
+    { label: "Javascript", value: "js" },
+    { label: "Go", value: "go" },
+  ]}
+>
+  <TabItem value="cli">
 
-**TODO** This section is unfinished.
+```bash
+# Insert program start
+$ restish isp program-start $CHANNEL_ID event_id: 1
+
+# End a program
+$ restish isp program-stop $CHANNEL_ID event_id: 1
+```
+
+  </TabItem>
+  <TabItem value="js">
+
+```js
+// TODO
+```
+
+  </TabItem>
+  <TabItem value="go">
+
+```go
+request := client.ChannelOperationsApi.ProgramStart(context.Background(), "CHANNEL_ID")
+request.ProgramSignal(isp.ProgramSignal{
+  EventId: 1,
+})
+_, err := request.Execute()
+
+if err.Error() != "" {
+  panic(err)
+}
+```
+
+And then stop the same program:
+
+```go
+request := client.ChannelOperationsApi.ProgramEnd(context.Background(), "CHANNEL_ID")
+request.ProgramSignal(isp.ProgramSignal{
+  EventId: 1,
+})
+_, err := request.Execute()
+
+if err.Error() != "" {
+  panic(err)
+}
+```
+
+  </TabItem>
+</Tabs>
+
+## Arbitrary Signaling
+
+Arbitrary out-of-band signaling is supported, allowing you to send any custom data into the stream. The slate and program functionality above is just a convenience layer on the signaling API.
+
+<Tabs
+  groupId="client"
+  defaultValue="cli"
+  values={[
+    { label: "CLI", value: "cli" },
+    { label: "Javascript", value: "js" },
+    { label: "Go", value: "go" },
+  ]}
+>
+  <TabItem value="cli">
+
+```bash
+# Insert a program start signal
+$ restish isp signal $CHANNEL_ID segment_type: program, signal_type: start, event_id: 1
+```
+
+  </TabItem>
+  <TabItem value="js">
+
+```js
+// TODO
+```
+
+  </TabItem>
+  <TabItem value="go">
+
+```go
+request := client.ChannelOperationsApi.Signal(context.Background(), "CHANNEL_ID")
+request.GenericSignal([]isp.GenericSignal{
+  {
+    SegmentType: "program",
+    SignalType: "start",
+    EventId: 1
+  }
+})
+_, err := request.Execute()
+
+if err.Error() != "" {
+  panic(err)
+}
+```
+
+  </TabItem>
+</Tabs>

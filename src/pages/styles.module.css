@@ -35,3 +35,8 @@
   height: 200px;
   width: 200px;
 }
+
+abbr {
+  text-decoration: none;
+  border-bottom: none;
+}

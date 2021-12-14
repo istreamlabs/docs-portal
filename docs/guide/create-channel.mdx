@@ -73,7 +73,7 @@ import (
 
 func main() {
 	// Create a new API client.
-	client := isp.NewWithClientCredentials(CLIENT_ID, CLIENT_SECRET, ORGANIZATION)
+	client := isp.NewWithClientCredentials("CLIENT_ID", "CLIENT_SECRET", "ORGANIZATION")
 
 	// Get a list of all source summaries. Pagination is handled automatically.
 	ctx := context.Background()
@@ -96,7 +96,7 @@ Each returned source has an `id` field. Pick one and we will use it to create a 
 
 ## Creating a Channel
 
-Create a new channel with default settings by passing in your source at creation time. Here we assume that `SOURCEID` is the value picked above.
+Create a new channel with default settings by passing in your source at creation time. Here we assume that `SOURCE_ID` is the value picked above and `CHANNEL_ID` is the ID you want to use for the channel.
 
 <Tabs
   groupId="client"
@@ -110,17 +110,27 @@ Create a new channel with default settings by passing in your source at creation
   <TabItem value="cli">
 
 ```bash
-$ restish isp create-channel source.id: $SOURCEID
+$ restish isp put-channel $CHANNEL_ID ingest.source.id: $SOURCE_ID
 
 HTTP/2.0 201 Created
 Date: Wed, 23 Dec 2020 22:07:29 GMT
-Location: /v2/channels/ch-abc123
+Location: /v2/channels/CHANNEL_ID
 ```
 
-Your channel will get created and immediately start encoding and publishing. You can use the `Location` header from the response to find out the encoding settings and playback URLs:
+Alternatively you can pass in a JSON representation of the channel you wish to create:
 
 ```bash
-$ restish api.istreamplanet.com/v2/channels/ch-abc123
+$ restish isp put-channel $CHANNEL_ID <input.json
+```
+
+Your channel will get created and immediately start encoding and publishing. You can fetch the channel to see its configuration details:
+
+```bash
+# Via the `Location` header
+$ restish api.istreamplanet.com/v2/channels/CHANNEL_ID
+
+# Via the get operation
+$ restish isp get-channel $CHANNEL_ID
 ```
 
   </TabItem>
@@ -135,15 +145,14 @@ $ restish api.istreamplanet.com/v2/channels/ch-abc123
 
 ```go
 // Create the request, setting up a basic channel with just a source ID.
-request := client.ChannelsApi.CreateChannel(context.Background())
-request.Channel(isp.Channel{
-  Source: isp.ChannelSource{
-    Id: "SOURCE_ID",
-  },
-})
+request := client.ChannelsApi.PutChannel(context.Background(), "CHANNEL_ID")
+
+body := isp.PutChannelRequest{}
+body.Ingest.Source.Id = "SOURCE_ID"
+request.PutChannelRequest(body)
 
 // Perform the request and check for errors.
-resp, err := request.Channel().Execute()
+resp, err := request.Execute()
 
 if err.Error() != "" {
   panic(err)
@@ -243,7 +252,7 @@ When finished, you can stop a channel from publishing by deleting it using eithe
 
 ```bash
 # If you know the ID:
-$ restish isp delete-channel $CHANNELID
+$ restish isp delete-channel $CHANNEL_ID
 
 # If you know the location:
 $ restish delete api.istreamplanet.com/v2/channels/...

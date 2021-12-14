@@ -1,0 +1,72 @@
+---
+title: Auditing Channels
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+It is possible to audit all actions taken on a channel, even one that has been deleted.
+
+<Tabs
+  groupId="client"
+  defaultValue="cli"
+  values={[
+    { label: "CLI", value: "cli" },
+    { label: "Javascript", value: "js" },
+    { label: "Go", value: "go" },
+  ]}
+>
+  <TabItem value="cli">
+
+```bash
+# Get a channel timeline
+$ restish isp get-channel-timeline $CHANNEL_ID
+```
+
+  </TabItem>
+  <TabItem value="js">
+
+```js
+// TODO
+```
+
+  </TabItem>
+  <TabItem value="go">
+
+```go
+request := client.AuditOperationsApi.GetChannelTimeline(context.Background(), "CHANNEL_ID")
+entries, resp, err := request.Execute()
+
+if err.Error() != "" {
+  panic(err)
+}
+
+// Print out each action name
+for _, entry := range entries {
+  fmt.Println(entry.Action)
+}
+```
+
+  </TabItem>
+</Tabs>
+
+Individual audit entries look something like these below:
+
+```json
+{
+  "action": "put-channel",
+  "agent": "UNIQUE_USER_IDENTIFIER",
+  "request_body": "{...data as JSON string...}",
+  "status_code": 200,
+  "timestamp": "2021-01-01T12:00:00Z",
+  "trace_id": "484821178360672118"
+},
+{
+  "action": "program-start",
+  "agent": "UNIQUE_USER_IDENTIFIER",
+  "request_body": "{\"event_id\":0}",
+  "status_code": 204,
+  "timestamp": "2021-01-01T12:00:00Z",
+  "trace_id": "5179266826846428609",
+}
+```
